@@ -82,7 +82,7 @@ class ClientMapController {
   List<Map<String,dynamic>> listInfoPaquetes = [];
   
   // String baseUrl = 'http://192.168.100.36:3000';
-  String baseUrl = 'https://cuidadoencasa-api-test.onrender.com';
+  String baseUrl = 'https://api-medcab.onrender.com';
   
   String refCobertura = '';
 
@@ -618,7 +618,7 @@ class ClientMapController {
     List<dynamic> misMetodosReturn = [];
     try {
       Dio dio = Dio();
-      String url = '$baseUrl/api/enfermera/listMisMetodos';
+      String url = '$baseUrl/api/medcab/listMisMetodos';
 
       Map<String, dynamic> datos = {
         'isUserCostumerStripe' : idCustomer,

@@ -71,7 +71,7 @@ class MisAvisos {
           surfaceTintColor: Colors.white,
           contentPadding: const EdgeInsets.all(20),
           title: Text(
-            'Cuidado En Casa',
+            'MedCab',
             style: TextStyle(
               color: _paletaColores.mainA,
               fontSize: 20,
@@ -130,7 +130,7 @@ class MisAvisos {
           surfaceTintColor: Colors.white,
           contentPadding: const EdgeInsets.all(20),
           title: Text(
-            'Cuidado En Casa',
+            'MedCab',
             style: TextStyle(
               color: _paletaColores.mainA,
               fontSize: 20,
@@ -180,7 +180,7 @@ class MisAvisos {
           surfaceTintColor: Colors.white,
           contentPadding: const EdgeInsets.all(20),
           title: Text(
-            'Cuidado En Casa',
+            'MedCab',
             style: TextStyle(
               color: _paletaColores.mainA,
               fontSize: 20,
@@ -230,7 +230,7 @@ class MisAvisos {
           surfaceTintColor: Colors.white,
           contentPadding: const EdgeInsets.all(20),
           title: Text(
-            'Cuidado En Casa',
+            'MedCab',
             style: TextStyle(
               color: _paletaColores.mainA,
               fontSize: 20,

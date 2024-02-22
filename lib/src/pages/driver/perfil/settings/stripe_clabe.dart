@@ -31,7 +31,7 @@ class MicuentaCLABE extends StatefulWidget {
 class _MicuentaCLABEState extends State<MicuentaCLABE> {
 
   // String baseUrl = 'http://192.168.100.36:3000';
-  String baseUrl = 'https://cuidadoencasa-api-test.onrender.com';
+  String baseUrl = 'https://api-medcab.onrender.com';
 
   final _paletaColors = PaletaColors();
   final formKey = GlobalKey<FormState>();
@@ -441,7 +441,7 @@ class _MicuentaCLABEState extends State<MicuentaCLABE> {
 
       try {
         Dio dio = Dio();
-        String url = '$baseUrl/api/enfermera/actualizarInfoBanco';
+        String url = '$baseUrl/api/medcab/actualizarInfoBanco';
 
         Map<String, dynamic> datos = {
           'id_seller': idConn,

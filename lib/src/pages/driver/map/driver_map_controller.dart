@@ -194,7 +194,7 @@ class DriverMapController {
           updateLocation();
         }
       } else {
-        MisAvisos().ventanaAviso(context!, 'Para poder conectarse y brindar sus servicios su usuario debe ser verificado y aprobado por el equipo de Cuidado En Casa, por favor verifique el estatus de su cuenta en su perfil.');
+        MisAvisos().ventanaAviso(context!, 'Para poder conectarse y brindar sus servicios su usuario debe ser verificado y aprobado por el equipo de MedCab, por favor verifique el estatus de su cuenta en su perfil.');
       }
     } else {
       MisAvisos().ventanaAviso(context!, 'Error, cargue nuevamente la app');

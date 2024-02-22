@@ -22,7 +22,7 @@ class PantallaCarga extends StatelessWidget {
         backgroundColor: PaletaColors().fondoMain,
         automaticallyImplyLeading: false,
         title: Text(
-          'Cuidado En Casa',
+          'MedCab',
           style: TextStyle(
             fontFamily: 'Titulos',
             color: PaletaColors().mainA,

@@ -101,7 +101,7 @@ class _ClientTravelRequestPageState extends State<ClientTravelRequestPage> {
           padding: EdgeInsets.only(left: 30, top: 30),
           child: SafeArea(
             child: Text(
-              'Cuidado En Casa',
+              'MedCab',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

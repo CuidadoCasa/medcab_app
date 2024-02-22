@@ -94,7 +94,7 @@ class DriverTravelMapController {
 
   StreamSubscription<DocumentSnapshot> ? _streamStatusSubscription;
 
-  String baseUrl = 'https://cuidadoencasa-api-test.onrender.com';
+  String baseUrl = 'https://api-medcab.onrender.com';
 
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
@@ -187,7 +187,7 @@ class DriverTravelMapController {
     String estado = '';
     try {
       Dio dio = Dio();
-      String url = '$baseUrl/api/enfermera/cancelPay';
+      String url = '$baseUrl/api/medcab/cancelPay';
 
       Map<String, dynamic> datos = {
         'idPaymentIntent' : idPayment,
@@ -230,7 +230,7 @@ class DriverTravelMapController {
     String estado = '';
     try {
       Dio dio = Dio();
-      String url = '$baseUrl/api/enfermera/confirmPay';
+      String url = '$baseUrl/api/medcab/confirmPay';
 
       Map<String, dynamic> datos = {
         'idPaymentIntent' : idPayment,

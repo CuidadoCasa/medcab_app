@@ -142,6 +142,43 @@ class _PerfilEnfermeraPageState extends State<PerfilEnfermeraPage> {
   @override
   Widget build(BuildContext context) {
     return !cargando ? Scaffold(
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () async{
+      //     //Enfermeria
+      //     await FirebaseFirestore.instance
+      //     .collection('Paquetes')
+      //     .doc('Enfermeria')
+      //     .set({
+      //       'PaquetedV': {
+      //         'base':  1500,
+      //         'costo': 1500,
+      //         'descripcion': 'Médico con Especialidad en Pediatra (noche)',
+      //         'horas': 1,
+      //         'nombre': 'Paquete V',
+      //         'pacientes': 1,
+      //         'servicios': [
+      //           'Un pediatra brinda atención médica a los seres humanos durante sus primeros años de vida para vigilar que el desarrollo del cuerpo ocurra de una manera adecuada. Su objetivo principal es cuidar la salud de los niños para reducir la mortalidad infantil, prevenir enfermedades infecciosas y ayudar a mejorar la calidad de vida de los pacientes con condiciones hereditarias o enfermedades crónicas',
+      //         ]
+      //       }
+      //     }, SetOptions(merge: true));
+          // await FirebaseFirestore.instance
+          // .collection('Cobertura')
+          // .doc('puebla')
+          // .set({
+          //   'ciudades': [
+          //     {
+          //       'ciudad': 'heroica puebla de zaragoza',
+          //       'porcentaje': 70
+          //     },
+          //     {
+          //       'ciudad': 'san bernardino tlaxcalancingo',
+          //       'porcentaje': 70
+          //     },
+          //   ]
+          // }, SetOptions(merge: true));
+          // print('Mayrita');
+        // }
+      // ),
       backgroundColor: _paletaColors.fondoMain,
       appBar: AppBar(
         backgroundColor: _paletaColors.mainA,

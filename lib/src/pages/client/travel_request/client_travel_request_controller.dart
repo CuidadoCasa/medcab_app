@@ -55,7 +55,7 @@ class ClientTravelRequestController {
   StreamSubscription<DocumentSnapshot> ? _streamStatusSubscription;
 
   // String baseUrl = 'http://192.168.100.36:3000';
-  String baseUrl = 'https://cuidadoencasa-api-test.onrender.com';
+  String baseUrl = 'https://api-medcab.onrender.com';
 
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
@@ -172,7 +172,7 @@ class ClientTravelRequestController {
         'metadata': {
           'customer_name': dataProvider.dataUsuario['nombre'],
           'customer_email': dataProvider.dataUsuario['correo'],
-          'product_id': 'Cuidado en Casa',
+          'product_id': 'MedCab',
         },
       },
     );
@@ -187,7 +187,7 @@ class ClientTravelRequestController {
 
     try {
       Dio dio = Dio();
-      String url = '$baseUrl/api/enfermera/crearClaveEfimera';
+      String url = '$baseUrl/api/medcab/crearClaveEfimera';
 
       Map<String, dynamic> datos = {
         'isUserCostumerStripe' : idCustomer,
@@ -213,7 +213,7 @@ class ClientTravelRequestController {
 
     try {
       Dio dio = Dio();
-      String url = '$baseUrl/api/enfermera/crearSetUpIntent';
+      String url = '$baseUrl/api/medcab/crearSetUpIntent';
 
       Map<String, dynamic> datos = {
         'isUserCostumerStripe' : idCostumer,
@@ -242,7 +242,7 @@ class ClientTravelRequestController {
           setupIntentClientSecret: setupIntent,
           customerEphemeralKeySecret: claveEfimera,
           customerId: customerID,
-          merchantDisplayName: 'Cuidado en Casa',
+          merchantDisplayName: 'MedCab',
         ),
       );
       await Stripe.instance.presentPaymentSheet();

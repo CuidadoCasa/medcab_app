@@ -40,7 +40,7 @@ class _AgregarMetodoPageState extends State<AgregarMetodoPage> {
   String username = '';
   
   // String baseUrl = 'http://192.168.100.36:3000';
-  String baseUrl = 'https://cuidadoencasa-api-test.onrender.com';
+  String baseUrl = 'https://api-medcab.onrender.com';
 
   bool trabajando = true;
   bool autoValidar = false;
@@ -267,7 +267,7 @@ class _AgregarMetodoPageState extends State<AgregarMetodoPage> {
           ),
           setupIntentClientSecret: setupIntentClientSecret,
           customerId: customerId,
-          merchantDisplayName: 'Cuidado en Casa',
+          merchantDisplayName: 'MedCab',
           billingDetails: BillingDetails(
             name: username,
             email: emailUser,
@@ -328,7 +328,7 @@ class _AgregarMetodoPageState extends State<AgregarMetodoPage> {
 
     try {
       Dio dio = Dio();
-      String url = '$baseUrl/api/enfermera/crearCostumerStripe';
+      String url = '$baseUrl/api/medcab/crearCostumerStripe';
 
       Map<String, dynamic> datos = {
         'emailUser' : correo,
@@ -354,7 +354,7 @@ class _AgregarMetodoPageState extends State<AgregarMetodoPage> {
 
     try {
       Dio dio = Dio();
-      String url = '$baseUrl/api/enfermera/crearSetUpIntent';
+      String url = '$baseUrl/api/medcab/crearSetUpIntent';
 
       Map<String, dynamic> datos = {
         'isUserCostumerStripe' : idCostumer,

@@ -32,7 +32,7 @@ class CuentaConnect extends StatefulWidget {
 class _CuentaConnectState extends State<CuentaConnect> {
 
   // String baseUrl = 'http://192.168.100.36:3000';
-  String baseUrl = 'https://cuidadoencasa-api-test.onrender.com';
+  String baseUrl = 'https://api-medcab.onrender.com';
 
   final _paletaColors = PaletaColors();
   final formKey = GlobalKey<FormState>();
@@ -737,7 +737,7 @@ class _CuentaConnectState extends State<CuentaConnect> {
 
     try {
       Dio dio = Dio();
-      String url = '$baseUrl/api/enfermera/crerCuentaConnect';
+      String url = '$baseUrl/api/medcab/crerCuentaConnect';
 
       Map<String, dynamic> datos = {
         'email' : strCorreo, 
