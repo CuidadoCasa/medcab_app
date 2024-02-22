@@ -84,7 +84,14 @@ class PushNotificationsProvider {
   // }
 
   void saveToken(String idUser, String typeUser) async {
-    String? token = await _firebaseMessaging.getToken();
+
+    String ? token = '';
+    if(Platform.isIOS){
+      token = await _firebaseMessaging.getAPNSToken();
+    } else {
+      token = await _firebaseMessaging.getToken();
+    }
+    
     Map<String, dynamic> data = {
       'token': token
     };

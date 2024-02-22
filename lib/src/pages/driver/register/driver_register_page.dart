@@ -208,7 +208,7 @@ class _DriverRegisterPageState extends State<DriverRegisterPage> {
       alignment: Alignment.centerLeft,
       margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
       child: const Text(
-        'Registro Enfermera',
+        'Registro Médico',
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
