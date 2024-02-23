@@ -111,7 +111,7 @@ class LoginController {
       }
 
     } catch(error) {
-      utils.Snackbar.showSnackbar(context!, key, 'Error: $error');
+      utils.Snackbar.showSnackbar(context!, key, 'Verifique el correo y contraseña.');
       _progressDialog!.hide();
     }
 
