@@ -24,6 +24,7 @@ import 'package:app_medcab/src/providers/push_notifications_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:app_medcab/src/pages/client/travel_map/client_travel_map_page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 
@@ -66,6 +67,11 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'MedCab',
+        localizationsDelegates: GlobalMaterialLocalizations.delegates,
+        supportedLocales: const [
+          Locale('es'),
+        ],
+        locale: const Locale('es'),
         navigatorKey: navigatorKey,
         initialRoute: 'home',
         theme: ThemeData(

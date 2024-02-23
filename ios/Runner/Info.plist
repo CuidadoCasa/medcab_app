@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>app_medcab</string>
+	<string>MedCab</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -45,5 +45,15 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Cuidado En Casa necesita permiso para tu galeria para elegir imágenes que necesitas para tu alta.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Cuidado En Casa necesita permiso para tu cámara para elegir imágenes que necesitas para tu alta.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Cuidado En Casa necesita permiso para tu microfono para elegir imágenes que necesitas para tu alta.</string>
+	
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to location when open.</string>
 </dict>
 </plist>
