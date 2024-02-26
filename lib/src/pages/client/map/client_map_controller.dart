@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:app_medcab/src/pages/client/map/places_search.dart';
 import 'package:app_medcab/src/pages/client/metodos_pago/mis_metodos_pago.dart';
@@ -208,6 +209,13 @@ class ClientMapController {
     String ciudadRef = quitarAcentos(referenciaCiudad!).toLowerCase();
     String estadoRef = quitarAcentos(referenciaEstado!).toLowerCase();
 
+    if(Platform.isIOS){
+      int indexEstado = estadosMexico.indexWhere((element) => element.contains(estadoRef));
+      if(indexEstado != -1){
+        estadoRef = estadosMexico[indexEstado];
+      }
+    }
+
     final cobertura = await FirebaseFirestore.instance
     .collection('Cobertura')
     .doc(estadoRef)
@@ -244,6 +252,7 @@ class ClientMapController {
     .replaceAll(RegExp(r'[íÍ]'), 'i')
     .replaceAll(RegExp(r'[óÓ]'), 'o')
     .replaceAll(RegExp(r'[úÚ]'), 'u')
+    .replaceAll('.', '')
     .replaceAll(RegExp(r'ciudad de '), '');
   }
 
@@ -638,5 +647,40 @@ class ClientMapController {
       return [];
     }
   }
+  
+  List<String> estadosMexico = [
+    'aguascalientes',
+    'baja california',
+    'baja california sur',
+    'campeche',
+    'chiapas',
+    'chihuahua',
+    'ciudad de mexico',
+    'coahuila',
+    'colima',
+    'durango',
+    'guanajuato',
+    'guerrero',
+    'hidalgo',
+    'jalisco',
+    'estado de mexico',
+    'michoacan',
+    'morelos',
+    'nayarit',
+    'nuevo leon',
+    'oaxaca',
+    'puebla',
+    'queretaro',
+    'quintana roo',
+    'san luis potosi',
+    'sinaloa',
+    'sonora',
+    'tabasco',
+    'tamaulipas',
+    'tlaxcala',
+    'veracruz',
+    'yucatan',
+    'zacatecas',
+  ];
 
 }

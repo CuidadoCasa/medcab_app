@@ -59,10 +59,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyB-XW9Slo_YCNL4E_6baQmYtf-mh8fCR5k',
-    appId: '1:4251258964:ios:5860e245a5af3e6522ddc1',
+    appId: '1:4251258964:ios:543a7b172dd094b722ddc1',
     messagingSenderId: '4251258964',
     projectId: 'med-cab-90fbb',
     storageBucket: 'med-cab-90fbb.appspot.com',
-    iosBundleId: 'com.medcab.mx',
+    iosBundleId: 'com.medcabpuebla.mx',
   );
 }
