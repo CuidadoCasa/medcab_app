@@ -60,7 +60,7 @@ class _ComprobanteFiscalPageState extends State<ComprobanteFiscalPage> {
 
     if(datos.data() != null){
       datosUser = datos.data() as Map<String, dynamic>;
-      urlFotoConstancia = datosUser.containsKey('fiscal') ? datosUser['fical'] : '';
+      urlFotoConstancia = datosUser.containsKey('fiscal') ? datosUser['fiscal'] : '';
     }
 
     cargando = false;
@@ -267,7 +267,7 @@ class _ComprobanteFiscalPageState extends State<ComprobanteFiscalPage> {
   }
 
   void _crearRegistro() async {
-    String nameC = 'cedula';
+    String nameC = 'fiscal';
     String urlAuxC = '';
     String uid  = widget.userId;
 

@@ -131,7 +131,7 @@ class _FotoPerfilPageState extends State<FotoPerfilPage> {
         child: Container(
           margin: const EdgeInsets.only(left: 30, top: 20),
           child: const Text(
-            'Cambiar mi contraseña',
+            'Cambiar mi foto',
             style: TextStyle(
               fontSize: 19,
               color: Colors.white,

@@ -7,6 +7,8 @@ class VariablesProvider with ChangeNotifier {
   String _idCuentaConnect = '';
   bool _isConect = false;
 
+  bool _isModeTest = false;
+
   Map<String,dynamic> _filtros = {};
   Map<String,dynamic> _dataUsuario = {
     'nombre': '',
@@ -14,6 +16,12 @@ class VariablesProvider with ChangeNotifier {
     'costumer': '',
     'connect': ''
   };
+
+  bool get isModeTest => _isModeTest;
+  set isModeTest(bool value){
+    _isModeTest = value;
+    notifyListeners();
+  }
 
   bool get isConect => _isConect;
   set isConect(bool value){

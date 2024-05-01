@@ -1,10 +1,14 @@
+import 'package:app_medcab/src/providers/variables_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:app_medcab/src/models/driver.dart';
 import 'package:app_medcab/src/providers/auth_provider.dart';
 import 'package:app_medcab/src/providers/driver_provider.dart';
 import 'package:app_medcab/src/utils/my_progress_dialog.dart';
 import 'package:app_medcab/src/utils/snackbar.dart' as utils;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:progress_dialog2/progress_dialog2.dart';
+import 'package:provider/provider.dart';
 
 class DriverRegisterController {
 
@@ -37,6 +41,7 @@ class DriverRegisterController {
     String username = usernameController.text;
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
+    final dataProvider = Provider.of<VariablesProvider>(context!, listen: false);
 
     String plate = '000-000';
 
@@ -62,6 +67,15 @@ class DriverRegisterController {
         );
 
         await _driverProvider!.create(driver);
+        
+        bool isUserTest = (email == 'paciente@gmail.com' || email == 'medico@gmail.com');
+        dataProvider.isModeTest = isUserTest;
+
+        if(isUserTest){
+          Stripe.publishableKey = dotenv.env['STRIPE_PK_TEST']!;
+        } else {
+          Stripe.publishableKey = dotenv.env['STRIPE_PK']!;
+        }
 
         _progressDialog!.hide();
         Navigator.pushNamedAndRemoveUntil(context!, 'driver/map', (route) => false);

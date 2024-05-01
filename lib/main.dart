@@ -25,13 +25,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:app_medcab/src/pages/client/travel_map/client_travel_map_page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
-  Stripe.publishableKey = dotenv.env['STRIPE_PK']!;
+  // Stripe.publishableKey = dotenv.env['STRIPE_PK_TEST']!;
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }

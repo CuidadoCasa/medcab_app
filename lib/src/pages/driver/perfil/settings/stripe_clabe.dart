@@ -30,7 +30,6 @@ class MicuentaCLABE extends StatefulWidget {
 
 class _MicuentaCLABEState extends State<MicuentaCLABE> {
 
-  // String baseUrl = 'http://192.168.100.36:3000';
   String baseUrl = 'https://api-medcab.onrender.com';
 
   final _paletaColors = PaletaColors();
@@ -441,7 +440,8 @@ class _MicuentaCLABEState extends State<MicuentaCLABE> {
 
       try {
         Dio dio = Dio();
-        String url = '$baseUrl/api/medcab/actualizarInfoBanco';
+        String url = '';
+        url = dataProvider.isModeTest ? '$baseUrl/api/test/medcab/actualizarInfoBanco' : '$baseUrl/api/medcab/actualizarInfoBanco';
 
         Map<String, dynamic> datos = {
           'id_seller': idConn,

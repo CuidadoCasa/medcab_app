@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:app_medcab/src/providers/variables_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:app_medcab/src/shared/avisos.dart';
@@ -20,6 +21,7 @@ import 'package:app_medcab/src/models/driver.dart';
 import 'package:app_medcab/src/widgets/bottom_sheet_client_info.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:progress_dialog2/progress_dialog2.dart';
+import 'package:provider/provider.dart';
 
 class ClientTravelMapController {
 
@@ -251,10 +253,13 @@ class ClientTravelMapController {
   }
 
   Future<String> _cancelarPago(String idPayment) async {
+    final variablesProvider = Provider.of<VariablesProvider>(context!, listen: false);
     String estado = '';
+
     try {
       Dio dio = Dio();
-      String url = '$baseUrl/api/medcab/cancelPay';
+      String url = '';
+      url = variablesProvider.isModeTest ? '$baseUrl/api/test/medcab/cancelPay' : '$baseUrl/api/medcab/cancelPay';
 
       Map<String, dynamic> datos = {
         'idPaymentIntent' : idPayment,

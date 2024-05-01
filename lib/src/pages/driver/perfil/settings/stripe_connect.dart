@@ -31,7 +31,6 @@ class CuentaConnect extends StatefulWidget {
 
 class _CuentaConnectState extends State<CuentaConnect> {
 
-  // String baseUrl = 'http://192.168.100.36:3000';
   String baseUrl = 'https://api-medcab.onrender.com';
 
   final _paletaColors = PaletaColors();
@@ -737,7 +736,8 @@ class _CuentaConnectState extends State<CuentaConnect> {
 
     try {
       Dio dio = Dio();
-      String url = '$baseUrl/api/medcab/crerCuentaConnect';
+      String url = '';
+      url = dataProvider.isModeTest ? '$baseUrl/api/test/medcab/crerCuentaConnect' : '$baseUrl/api/medcab/crerCuentaConnect';
 
       Map<String, dynamic> datos = {
         'email' : strCorreo, 

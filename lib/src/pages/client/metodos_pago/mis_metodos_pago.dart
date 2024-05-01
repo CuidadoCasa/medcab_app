@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:app_medcab/src/models/metodo_info.dart';
 import 'package:app_medcab/src/pages/client/metodos_pago/agregar_metodo.dart';
@@ -25,7 +26,6 @@ class _MetodosPageState extends State<MetodosPage> {
   String emailUser = '';
   String userId = '';
   String idCostumerStripe = '';
-  // String baseUrl = 'http://192.168.100.36:3000';
   String baseUrl = 'https://api-medcab.onrender.com';
 
   bool trabajando = true;
@@ -50,7 +50,34 @@ class _MetodosPageState extends State<MetodosPage> {
     final dataProvider = Provider.of<VariablesProvider>(context, listen: false);
 
     if(user != null){
-      idCostumerStripe = dataProvider.dataUsuario['costumer'];
+
+      String uidUser = user.uid;
+      Map<String,dynamic> datosPersonData = {};
+      Map<String,dynamic> datosPersonDataGen = {};
+
+      DocumentSnapshot<Map<String, dynamic>> datosPerson = await FirebaseFirestore.instance
+      .collection('Clients')
+      .doc(uidUser)
+      .collection('informacion')
+      .doc('personal')
+      .get();
+
+      DocumentSnapshot<Map<String, dynamic>> datosPersonGen = await FirebaseFirestore.instance
+      .collection('Clients')
+      .doc(uidUser)
+      .get();
+
+      if(datosPerson.data() != null){
+        datosPersonData = datosPerson.data()!;
+        idCostumerStripe = datosPersonData.containsKey('idCostumerStripe') ? datosPersonData['idCostumerStripe'] : '';
+        dataProvider.dataUsuario.update('costumer', (value) => idCostumerStripe);
+      }
+
+      if(datosPersonGen.data() != null){
+        datosPersonDataGen = datosPersonGen.data()!;
+        dataProvider.dataUsuario.update('nombre', (value) => datosPersonDataGen['username']);
+        dataProvider.dataUsuario.update('correo', (value) => datosPersonDataGen['email']);
+      }      
 
       if(idCostumerStripe.isNotEmpty){
         listMisMetodos = await _recuperarListaMetodos(idCostumerStripe);
@@ -80,21 +107,28 @@ class _MetodosPageState extends State<MetodosPage> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: _paletaColors.mainA,
+          backgroundColor: trabajando ? Colors.grey : _paletaColors.mainA,
           onPressed: (){
-            Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) => const AgregarMetodoPage(),
-              ),
-            );
+            if(!trabajando){
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => const AgregarMetodoPage(),
+                ),
+              );
+            }
           },
           child: const Icon(
             CupertinoIcons.add_circled,
             color: Colors.white,
           ),
         ),
-        body: _listMetodos(),
+        body: trabajando ? Center(
+          child: CupertinoActivityIndicator(
+            radius: 40,
+            color: _paletaColors.mainA,
+          )
+        ) : _listMetodos(),
       ),
     );
   }
@@ -141,9 +175,12 @@ class _MetodosPageState extends State<MetodosPage> {
   
   Future<List<dynamic>> _recuperarListaMetodos(String idCustomer) async {
     List<dynamic> misMetodosReturn = [];
+    final variablesProvider = Provider.of<VariablesProvider>(context, listen: false);
+
     try {
       Dio dio = Dio();
-      String url = '$baseUrl/api/medcab/listMisMetodos';
+      String url = '';
+      url = variablesProvider.isModeTest ? '$baseUrl/api/test/medcab/listMisMetodos' : '$baseUrl/api/medcab/listMisMetodos';
 
       Map<String, dynamic> datos = {
         'isUserCostumerStripe' : idCustomer,

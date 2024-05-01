@@ -268,7 +268,7 @@ class _TituloProfesionalPageState extends State<TituloProfesionalPage> {
   }
 
   void _crearRegistro() async {
-    String nameC = 'cedula';
+    String nameC = 'titulo';
     String urlAuxC = '';
     String uid  = widget.userId;
 

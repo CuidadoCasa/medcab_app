@@ -1,6 +1,11 @@
+import 'package:app_medcab/src/providers/variables_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart' as authaux;
 import 'package:flutter/material.dart';
 import 'package:app_medcab/src/providers/auth_provider.dart';
 import 'package:app_medcab/src/utils/shared_pref.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:provider/provider.dart';
 
 class HomeController {
 
@@ -24,6 +29,17 @@ class HomeController {
   void checkIfUserIsAuth() {
     bool isSigned = _authProvider!.isSignedIn();
     if (isSigned) {
+
+      final dataProvider = Provider.of<VariablesProvider>(context!, listen: false);
+      String emailUser = authaux.FirebaseAuth.instance.currentUser!.email!;
+      bool isUserTest = (emailUser == 'paciente@gmail.com' || emailUser == 'medico@gmail.com');
+      dataProvider.isModeTest = isUserTest;
+
+      if(isUserTest){
+        Stripe.publishableKey = dotenv.env['STRIPE_PK_TEST']!;
+      } else {
+        Stripe.publishableKey = dotenv.env['STRIPE_PK']!;
+      }
 
       if (_isNotification != 'true') {
         if (_typeUser == 'client') {

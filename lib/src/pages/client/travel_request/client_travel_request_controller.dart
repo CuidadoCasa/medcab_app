@@ -54,7 +54,6 @@ class ClientTravelRequestController {
   StreamSubscription<List<DocumentSnapshot>> ? _streamSubscription;
   StreamSubscription<DocumentSnapshot> ? _streamStatusSubscription;
 
-  // String baseUrl = 'http://192.168.100.36:3000';
   String baseUrl = 'https://api-medcab.onrender.com';
 
   Future init(BuildContext context, Function refresh) async {
@@ -152,11 +151,19 @@ class ClientTravelRequestController {
     final dataProvider = Provider.of<VariablesProvider>(context!, listen: false);
 
     Dio dio = Dio();
+    String barer = '';
+
+    if(dataProvider.isModeTest){
+      barer = 'Bearer ${dotenv.env['STRIPE_SK_TEST']}';
+    } else {
+      barer = 'Bearer ${dotenv.env['STRIPE_SK']}';
+    }
+
     var response = await dio.post(
       'https://api.stripe.com/v1/payment_intents',
       options: Options(
         headers: {
-          'Authorization': 'Bearer ${dotenv.env['STRIPE_SK']}',
+          'Authorization': barer,
           'Content-Type': 'application/x-www-form-urlencoded'
         },
       ),
@@ -184,10 +191,13 @@ class ClientTravelRequestController {
   
   Future<String> _getClaveEfimera(String idCustomer) async {
     String miClaveEfimera = '';
+    final variablesProvider = Provider.of<VariablesProvider>(context!, listen: false);
+
 
     try {
       Dio dio = Dio();
-      String url = '$baseUrl/api/medcab/crearClaveEfimera';
+      String url = '';
+      url = variablesProvider.isModeTest ? '$baseUrl/api/test/medcab/crearClaveEfimera' : '$baseUrl/api/medcab/crearClaveEfimera';
 
       Map<String, dynamic> datos = {
         'isUserCostumerStripe' : idCustomer,
@@ -210,10 +220,12 @@ class ClientTravelRequestController {
 
   Future<String> _crearSetupIntent(String idCostumer) async {
     String miClientSetup = '';
+    final variablesProvider = Provider.of<VariablesProvider>(context!, listen: false);
 
     try {
       Dio dio = Dio();
-      String url = '$baseUrl/api/medcab/crearSetUpIntent';
+      String 
+      url = variablesProvider.isModeTest ? '$baseUrl/api/test/medcab/crearSetUpIntent' : '$baseUrl/api/medcab/crearSetUpIntent';
 
       Map<String, dynamic> datos = {
         'isUserCostumerStripe' : idCostumer,

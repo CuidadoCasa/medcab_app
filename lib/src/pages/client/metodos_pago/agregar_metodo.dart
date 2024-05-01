@@ -39,7 +39,6 @@ class _AgregarMetodoPageState extends State<AgregarMetodoPage> {
   String clientSecretSetupIntente = '';
   String username = '';
   
-  // String baseUrl = 'http://192.168.100.36:3000';
   String baseUrl = 'https://api-medcab.onrender.com';
 
   bool trabajando = true;
@@ -138,6 +137,7 @@ class _AgregarMetodoPageState extends State<AgregarMetodoPage> {
             titulo: 'Continuar', 
             fondo: (_titularCorreo.text.trim().isNotEmpty | _titularNombre.text.trim().isNotEmpty) ? _paletaColors.mainA : Colors.grey,
             onpress: (){
+              FocusScope.of(context).unfocus();
               _checkForm();
               if(formKey.currentState!.validate()){
                 _obtenerClaves();
@@ -256,6 +256,7 @@ class _AgregarMetodoPageState extends State<AgregarMetodoPage> {
   Future<void> _guardarMetodosPagoStripe(String setupIntentClientSecret, String customerId)async{
     if(mounted) Navigator.pop(context);
     try {
+      
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
           intentConfiguration: const IntentConfiguration(
@@ -324,11 +325,13 @@ class _AgregarMetodoPageState extends State<AgregarMetodoPage> {
   }
 
   Future<String> _crearCutomer(String correo) async {
+    final variablesProvider = Provider.of<VariablesProvider>(context, listen: false);
     String miNewCustomer = '';
 
     try {
       Dio dio = Dio();
-      String url = '$baseUrl/api/medcab/crearCostumerStripe';
+      String url = '';
+      url = variablesProvider.isModeTest ? '$baseUrl/api/test/medcab/crearCostumerStripe' : '$baseUrl/api/medcab/crearCostumerStripe';
 
       Map<String, dynamic> datos = {
         'emailUser' : correo,
@@ -351,10 +354,12 @@ class _AgregarMetodoPageState extends State<AgregarMetodoPage> {
 
   Future<String> _crearSetupIntent(String idCostumer) async {
     String miClientSetup = '';
+    final variablesProvider = Provider.of<VariablesProvider>(context, listen: false);
 
     try {
       Dio dio = Dio();
-      String url = '$baseUrl/api/medcab/crearSetUpIntent';
+      String url = '';
+      url = variablesProvider.isModeTest ? '$baseUrl/api/test/medcab/crearSetUpIntent' : '$baseUrl/api/medcab/crearSetUpIntent';
 
       Map<String, dynamic> datos = {
         'isUserCostumerStripe' : idCostumer,

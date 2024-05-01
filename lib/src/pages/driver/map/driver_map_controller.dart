@@ -184,10 +184,10 @@ class DriverMapController {
     _progressDialog!.hide();
   }
 
-  void connect() {
+  void connect(bool conectado) {
     if(driver != null){
       if((driver!.isAutorizado != null) && (driver!.isAutorizado != 0)){
-        if (isConnect) {
+        if (conectado) {
           disconnect();
         } else {
           _progressDialog!.show();
@@ -202,6 +202,9 @@ class DriverMapController {
   }
 
   void disconnect() {
+    final dataProvider = Provider.of<VariablesProvider>(context!, listen: false);
+
+    dataProvider.isConect = false;
     _positionStream?.cancel();
     _geofireProvider!.delete(_authProvider!.getUser()!.uid);
   }

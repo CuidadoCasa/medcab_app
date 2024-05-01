@@ -148,49 +148,76 @@ class _ClientMapPageState extends State<ClientMapPage> {
   }
 
   Widget _contenidoSheet(Map<String,dynamic> data){
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            data['nombre'],
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 18
+    return ListView(
+      shrinkWrap: true,
+      padding: const EdgeInsets.only(top: 10, bottom: 15, left: 15, right: 15),
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              data['nombre'],
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: _paletaColors.grisO
+              )
+            ),
+            IconButton(
+              onPressed: ()=> Navigator.pop(context),
+              icon: Icon(Icons.close_rounded, color: _paletaColors.rojoMain)
             )
-          ),
-          const Divider(),
-          const SizedBox(height: 20),
-          _renglonRow(
-            'Atención para',
-            '${data['pacientes']} persona'
-          ),
-          const SizedBox(height: 20),
-          _renglonRow(
-            'Costo paquete',
-            FormatoDinero().convertirNum(data['costo'].toDouble())
-          ),
-          const Spacer(),
-          Text(
-            data['descripcion'],
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16
-            )
-          ),
-          const SizedBox(height: 15),
-          ButtonApp(
-            onPressed: ()=> Navigator.pop(context),
-            text: 'Aceptar',
-            textColor: _paletaColors.mainA,
-            icono: const SizedBox(),
-            fondoBoton: Colors.white,
-          ),
-          const SizedBox(height: 15),
-        ],
-      ),
+          ],
+        ),
+        const Divider(),
+        const SizedBox(height: 10),
+        Text(
+          data['descripcion'],
+          style: TextStyle(
+            fontSize: 17,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+            color: _paletaColors.mainA
+          )
+        ),
+        const SizedBox(height: 10),
+        _renglonRow(
+          'Atención para',
+          '${data['pacientes']} persona'
+        ),
+        const SizedBox(height: 10),
+        _renglonRow(
+          'Costo paquete',
+          FormatoDinero().convertirNum(data['costo'].toDouble())
+        ),
+        const SizedBox(height: 20),
+        Text(
+          'Servicios que incluye:',
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+            color: _paletaColors.mainA            
+          )
+        ),
+        const SizedBox(height: 10),
+        _servicios(data['servicios'])
+      ],
+    );
+  }
+
+  Widget _servicios(List<dynamic> listRef){
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: listRef.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Text(
+          '${index + 1}. ${listRef[index]}',
+          style: const TextStyle(
+            fontSize: 14
+          )
+        );
+      }
     );
   }
 
@@ -201,15 +228,15 @@ class _ClientMapPageState extends State<ClientMapPage> {
         Text(
           text1,
           style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16
+            fontSize: 14.5,
+            color: Colors.grey
           )
         ),
         Text(
           text2,
           style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
           )
         ),
       ],

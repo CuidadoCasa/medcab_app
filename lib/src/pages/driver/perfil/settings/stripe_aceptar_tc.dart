@@ -31,7 +31,6 @@ class AceptarTConnect extends StatefulWidget {
 }
 
 class _AceptarTConnectState extends State<AceptarTConnect> {
-  // String baseUrl = 'http://192.168.100.36:3000';
   String baseUrl = 'https://api-medcab.onrender.com';
 
   final _paletaColors = PaletaColors();
@@ -223,12 +222,15 @@ class _AceptarTConnectState extends State<AceptarTConnect> {
   
   void _aceptarContratoStripe() async {
     MisAvisos().ventanaTrabajando(context, 'Aceptando contrato...');
+    final variablesProvider = Provider.of<VariablesProvider>(context, listen: false);
+
     String miIP = await _obtenerDireccionIPPublica();
 
     if(miIP != 'error'){
       try {
         Dio dio = Dio();
-        String url = '$baseUrl/api/medcab/aceptarTC';
+        String url = '';
+        url = variablesProvider.isModeTest ? '$baseUrl/api/test/medcab/aceptarTC' : '$baseUrl/api/medcab/aceptarTC';
 
         Map<String, dynamic> datos = {
           'accountId': connectUserID,

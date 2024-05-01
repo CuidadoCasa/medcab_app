@@ -267,7 +267,7 @@ class _ComprobanteDomicilioPageState extends State<ComprobanteDomicilioPage> {
   }
 
   void _crearRegistro() async {
-    String nameC = 'cedula';
+    String nameC = 'domicilio';
     String urlAuxC = '';
     String uid  = widget.userId;
 

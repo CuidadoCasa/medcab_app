@@ -1,10 +1,14 @@
+import 'package:app_medcab/src/providers/variables_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:app_medcab/src/models/client.dart';
 import 'package:app_medcab/src/providers/auth_provider.dart';
 import 'package:app_medcab/src/providers/client_provider.dart';
 import 'package:app_medcab/src/utils/my_progress_dialog.dart';
 import 'package:app_medcab/src/utils/snackbar.dart' as utils;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:progress_dialog2/progress_dialog2.dart';
+import 'package:provider/provider.dart';
 
 class ClientRegisterController {
 
@@ -37,6 +41,7 @@ class ClientRegisterController {
     String username = usernameController.text;
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
+    final dataProvider = Provider.of<VariablesProvider>(context!, listen: false);
 
     if (username.isEmpty && email.isEmpty && password.isEmpty) {
       utils.Snackbar.showSnackbar(context!, key, 'Debes ingresar todos los campos');
@@ -59,6 +64,15 @@ class ClientRegisterController {
         );
 
         await _clientProvider!.create(client);
+        
+        bool isUserTest = (email == 'paciente@gmail.com' || email == 'medico@gmail.com');
+        dataProvider.isModeTest = isUserTest;
+
+        if(isUserTest){
+          Stripe.publishableKey = dotenv.env['STRIPE_PK_TEST']!;
+        } else {
+          Stripe.publishableKey = dotenv.env['STRIPE_PK']!;
+        }
 
         _progressDialog!.hide();
         Navigator.pushNamedAndRemoveUntil(context!, 'client/map', (route) => false);

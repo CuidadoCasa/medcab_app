@@ -21,7 +21,7 @@ class FotoPerfil extends StatelessWidget {
         width: ancho,
         fit: BoxFit.cover,
         image: NetworkImage(url),
-        placeholder: const AssetImage('assets/images/uhome_avatar_carga.png'),
+        placeholder: const AssetImage('assets/img/profile.png'),
       );
     } else {
       return SizedBox(

@@ -316,12 +316,12 @@ class _DriverMapPageState extends State<DriverMapPage> {
       margin: const EdgeInsets.symmetric(horizontal: 60, vertical: 30),
       child: ButtonApp(
         onPressed: (){
-          if(_con.isConnect){
+          if(dataProvider.isConect){
             dataProvider.isConect = false;
           } else {
             dataProvider.isConect = true;
           }
-          _con.connect();
+          _con.connect(!dataProvider.isConect);
         },
         text: _con.isConnect ? 'Desconectarme' : 'Conectarme',
         fondoBoton: _con.isConnect ? _paletaColors.mainB : Colors.grey,

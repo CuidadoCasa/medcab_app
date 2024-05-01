@@ -9,7 +9,6 @@ import 'package:app_medcab/src/pages/client/servicios/servicios_page.dart';
 import 'package:app_medcab/src/pages/client/perfil/client_perfil.dart';
 import 'package:app_medcab/src/providers/variables_provider.dart';
 import 'package:app_medcab/src/shared/avisos.dart';
-import 'package:app_medcab/src/shared/colors.dart';
 import 'package:app_medcab/src/shared/map_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart' as authaux;
 import 'package:flutter/material.dart';
@@ -35,7 +34,6 @@ class ClientMapController {
   Function ? refresh;
   GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
   final Completer<GoogleMapController> _mapController = Completer();
-  final _paletaColors = PaletaColors();
 
   CameraPosition initialPosition = const CameraPosition(
     target: LatLng(21.831120, -101.521867),
@@ -82,7 +80,6 @@ class ClientMapController {
   int indexPaqueteSelect = 1102;
   List<Map<String,dynamic>> listInfoPaquetes = [];
   
-  // String baseUrl = 'http://192.168.100.36:3000';
   String baseUrl = 'https://api-medcab.onrender.com';
   
   String refCobertura = '';
@@ -221,6 +218,11 @@ class ClientMapController {
     .doc(estadoRef)
     .get();
 
+    final coberturaGeneral = await FirebaseFirestore.instance
+    .collection('Cobertura')
+    .doc('general')
+    .get();
+
     Map<String,dynamic> dataRef = cobertura.data() ?? {};
 
     if(dataRef.containsKey('ciudades')){
@@ -237,11 +239,26 @@ class ClientMapController {
 
         return true;
       } else {
-        porcentajeAumentoPaquetes = 0;
-        return false;
+        porcentajeAumentoPaquetes = ((coberturaGeneral['porcentaje'].toDouble())/100) + 1;
+
+        for(int j = 0; j < listInfoPaquetes.length; j++){
+          double montoPaquete = listInfoPaquetes[j]['base'].toDouble();
+          double montoFinal = (montoPaquete * porcentajeAumentoPaquetes).roundToDouble();
+          listInfoPaquetes[j].update('costo', (value) => montoFinal);
+        }
+
+        return true;
       }
     } else {
-      return false;
+      porcentajeAumentoPaquetes = ((coberturaGeneral['porcentaje'].toDouble())/100) + 1;
+
+      for(int j = 0; j < listInfoPaquetes.length; j++){
+        double montoPaquete = listInfoPaquetes[j]['base'].toDouble();
+        double montoFinal = (montoPaquete * porcentajeAumentoPaquetes).roundToDouble();
+        listInfoPaquetes[j].update('costo', (value) => montoFinal);
+      }
+
+      return true;
     }
   }
 
@@ -552,13 +569,13 @@ class ClientMapController {
     showModalBottomSheet(
       context: context!,
       isScrollControlled: true,
-      builder: (BuildContext context) {      
+      builder: (BuildContext context) {    
         return Container(
-          height: 380,
+          height: 480,
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            color: _paletaColors.mainA,
-            borderRadius: const BorderRadius.only(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20)
             )
@@ -625,9 +642,12 @@ class ClientMapController {
   
   Future<List<dynamic>> _recuperarListaMetodos(String idCustomer) async {
     List<dynamic> misMetodosReturn = [];
+    final variablesProvider = Provider.of<VariablesProvider>(context!, listen: false);
+
     try {
       Dio dio = Dio();
-      String url = '$baseUrl/api/medcab/listMisMetodos';
+      String url = '';
+      url = variablesProvider.isModeTest ? '$baseUrl/api/test/medcab/listMisMetodos' : '$baseUrl/api/medcab/listMisMetodos';
 
       Map<String, dynamic> datos = {
         'isUserCostumerStripe' : idCustomer,
